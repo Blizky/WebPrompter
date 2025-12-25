@@ -123,3 +123,10 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
+
+.pseudo-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666; /* Adjust based on your theme */
+}
