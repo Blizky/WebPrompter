@@ -108,3 +108,9 @@ h1 {
     transform: scale(1.2);
 }
 
+.icon-kofi {
+  width: 20px;
+  height: 20px;
+  vertical-align: -4px;
+}
+
