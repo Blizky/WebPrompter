@@ -11,14 +11,14 @@ body, html {
 }
 
 
-/* Edit Mode */
+/* Edit Mode container - covers the page */
 #edit-mode { 
-    background: var(--white); color: var(--black);
+    background: var(--black); color: var(--black);
     display: flex; flex-direction: column; height: 100vh; padding: 20px; box-sizing: border-box;
 }
 
 textarea { 
-    flex-grow: 0; height: 480px; margin: 15px 0; padding: 20px; border: 2px solid var(--black);
+    flex-grow: 0; height: 480px; margin: 15px 0; padding: 20px; border: 2px solid var(--yellow);
     font-size: 1.2rem; border-radius: 10px; resize: none;
 }
 
