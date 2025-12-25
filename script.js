@@ -56,6 +56,15 @@ function setupHostHandlers() {
                 clearInterval(scrollInterval);
             }
         }
+
+        // New Scroll Up Logic
+            if (data.action === 'page-up') {
+                container.scrollBy({
+                    top: -window.innerHeight,
+                    behavior: 'smooth'
+                });
+            }
+        
         if (data.action === 'speed-up') settings.speed++;
         if (data.action === 'speed-down') settings.speed = Math.max(1, settings.speed - 1);
         if (data.action === 'size-up') settings.size += 5;
