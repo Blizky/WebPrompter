@@ -85,7 +85,7 @@ h1 {
 .app_title {
   color: var(--blue);
   font-family: sans-serif;
-  font-size: 32px;
+  font-size: 0.9rem;
   font-weight: bold;
   vertical-align: middle;
 }
