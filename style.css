@@ -76,7 +76,7 @@ h1 {
 .app_icon {
   display: inline-block;
   transform: scaleX(-1); /* Mirrors the emoji */
-  font-size: 32px;
+  font-size: 28px;
   margin-right: 10px;
   line-height: 1;
 }
@@ -85,7 +85,7 @@ h1 {
 .app_title {
   color: var(--blue);
   font-family: sans-serif;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
   vertical-align: middle;
 }
