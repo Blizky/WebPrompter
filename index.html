@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebPrompter | Blizlab</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="/assets/svg/fabicon.svg">
+</head>
+<body>
+    <div id="edit-mode">
+        <div class="header-container">
+          <span class="app_icon">💬</span><span class="app_title">WebPrompter</span>
+        </div>
+        <textarea id="script-input" placeholder="Paste your script here..."></textarea>
+        <button class="btn" onclick="startHost()">Launch Prompter & Remote</button>
+    </div>
+
+    <div id="prompter-mode">
+        <div id="scroll-container"><div id="text-display"></div></div>
+        <div id="status-bar">WAITING FOR REMOTE...</div>
+        <div id="qr-overlay">
+            <div id="qrcode" style="padding:20px; background:white; border-radius:10px;"></div>
+            <p style="color:var(--yellow); font-weight:bold; margin-top:20px;">Scan with Phone</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        // Check if we are opening as a remote instead of host
+        if (window.location.search.includes('remote')) {
+            window.location.href = 'remote.html' + window.location.search;
+        }
+        document.getElementById('script-input').value = settings.text;
+    </script>
+</body>
+</html>
