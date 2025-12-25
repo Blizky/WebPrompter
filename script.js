@@ -47,6 +47,18 @@ function setupHostHandlers() {
     
     let scrollInterval;
     conn.on('data', data => {
+        /* scroll up */
+        const container = document.getElementById('scroll-container');
+        if (data.action === 'page-up') {
+                // Move up by 80% of the container height to keep some context
+                const scrollAmount = container.clientHeight * 0.8;
+                container.scrollBy({
+                    top: -scrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+
+        
         if (data.action === 'toggle') {
             if (data.state) {
                 scrollInterval = setInterval(() => {
@@ -57,13 +69,7 @@ function setupHostHandlers() {
             }
         }
 
-        // New Scroll Up Logic
-            if (data.action === 'page-up') {
-                container.scrollBy({
-                    top: -window.innerHeight,
-                    behavior: 'smooth'
-                });
-            }
+
         
         if (data.action === 'speed-up') settings.speed++;
         if (data.action === 'speed-down') settings.speed = Math.max(1, settings.speed - 1);
