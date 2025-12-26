@@ -44,28 +44,6 @@ function setupHostHandlers() {
         document.getElementById('qr-overlay').style.display = 'none';
         lockWake();
     });
-
-// Triggers when the remote is explicitly closed
-    conn.on('close', () => showReconnectUI());
-    
-    // Triggers on network errors
-    conn.on('error', () => showReconnectUI());
-
-    // HEARTBEAT: If we stop receiving data for too long, assume disconnected
-    let timeout;
-    conn.on('data', () => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => showReconnectUI(), 10000); // 10s inactivity check
-    });
-}
-
-function showReconnectUI() {
-    document.getElementById('status-bar').style.background = '#c03221';
-    document.getElementById('status-bar').innerText = 'DISCONNECTED';
-    document.getElementById('qr-overlay').style.display = 'flex'; // Show QR again
-    // Optional: Stop the prompter so it doesn't keep scrolling while you're away
-    // clearInterval(scrollInterval); 
-}
     
     
     let scrollInterval;
