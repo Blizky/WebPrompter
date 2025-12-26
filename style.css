@@ -24,8 +24,8 @@ body, html {
 }
 
 textarea { 
-    flex-grow: 1; 
-	height: 40vh;
+    flex-grow: 0; 
+	height: 50vh;
 	/* min-height: 200px; /* Ensures it's not too small on tiny screens */
     /*max-height: 50vh;  /* Prevents it from taking more than half the screen */
 	
