@@ -20,10 +20,7 @@ body, html {
 	height: 100vh; 
 	padding: 20px; 
 	box-sizing: border-box;
-	/* To fix full screen functionality */
-    position: fixed;
-    inset: 0;        /* This is a shortcut for top:0, left:0, right:0, bottom:0 */
-    z-index: 999;    /* This ensures it sits on top of the footer/textarea */
+
 }
 
 textarea { 
@@ -35,6 +32,10 @@ textarea {
 #prompter-mode { 
 	display: none; 
 	height: 100vh;
+	/* To fix full screen functionality */
+    position: fixed;
+    inset: 0;        /* This is a shortcut for top:0, left:0, right:0, bottom:0 */
+    z-index: 999;    /* This ensures it sits on top of the footer/textarea */
 }
 
 #scroll-container {
