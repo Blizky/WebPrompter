@@ -13,8 +13,17 @@ body, html {
 
 /* Edit Mode container - covers the page */
 #edit-mode { 
-    background: var(--black); color: var(--black);
-    display: flex; flex-direction: column; height: 100vh; padding: 20px; box-sizing: border-box;
+    background: var(--black); 
+	color: var(--black);
+    display: flex; 
+	flex-direction: column; 
+	height: 100vh; 
+	padding: 20px; 
+	box-sizing: border-box;
+	/* To fix full screen functionality */
+    position: fixed;
+    inset: 0;        /* This is a shortcut for top:0, left:0, right:0, bottom:0 */
+    z-index: 999;    /* This ensures it sits on top of the footer/textarea */
 }
 
 textarea { 
@@ -23,7 +32,11 @@ textarea {
 }
 
 /* Prompter Display */
-#prompter-mode { display: none; height: 100vh; }
+#prompter-mode { 
+	display: none; 
+	height: 100vh;
+}
+
 #scroll-container {
     height: 100%; overflow-y: scroll; padding: 45vh 5vw;
     scroll-behavior: auto; /* Smoother for manual control */
