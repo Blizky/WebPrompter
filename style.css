@@ -25,9 +25,9 @@ body, html {
 
 textarea { 
     flex-grow: 1; 
-	/* height: 480px; */
-	min-height: 200px; /* Ensures it's not too small on tiny screens */
-    max-height: 50vh;  /* Prevents it from taking more than half the screen */
+	height: 50%;
+	/* min-height: 200px; /* Ensures it's not too small on tiny screens */
+    /*max-height: 50vh;  /* Prevents it from taking more than half the screen */
 	
 	margin: 15px 0; 
 	padding: 20px; 
