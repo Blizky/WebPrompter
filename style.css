@@ -24,8 +24,17 @@ body, html {
 }
 
 textarea { 
-    flex-grow: 0; height: 480px; margin: 15px 0; padding: 20px; border: 2px solid var(--yellow);
-    font-size: 1.2rem; border-radius: 10px; resize: none;
+    flex-grow: 1; 
+	/* height: 480px; */
+	min-height: 200px; /* Ensures it's not too small on tiny screens */
+    max-height: 50vh;  /* Prevents it from taking more than half the screen */
+	
+	margin: 15px 0; 
+	padding: 20px; 
+	border: 2px solid var(--yellow);
+    font-size: 1.2rem; 
+	border-radius: 10px; 
+	resize: none;
 }
 
 /* Prompter Display */
