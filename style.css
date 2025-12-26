@@ -79,7 +79,7 @@ textarea {
 
 
 #status-bar {
-    position: fixed; bottom: 15px; right: 15px; padding: 8px 15px;
+    position: fixed; bottom: 15px; right: 15px; padding: 5px 12px;
     border-radius: 20px; font-size: 12px; font-weight: bold; background: var(--red);
 }
 #qr-overlay {
