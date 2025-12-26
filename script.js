@@ -44,38 +44,46 @@ function setupHostHandlers() {
         document.getElementById('qr-overlay').style.display = 'none';
         lockWake();
     });
-    
+
+    // Handle explicit disconnects or errors
+    conn.on('close', () => showReconnectUI());
+    conn.on('error', () => showReconnectUI());
     
     let scrollInterval;
-    conn.on('data', data => {
-        /* scroll up */
-        const container = document.getElementById('scroll-container');
-        if (data.action === 'page-up') {
-                // Move up by 80% of the container height to keep some context
-                const scrollAmount = container.clientHeight * 0.8;
-                container.scrollBy({
-                    top: -scrollAmount,
-                    behavior: 'smooth'
-                });
-            }
+    let heartbeatTimeout;
 
-        
+    conn.on('data', data => {
+        // Heartbeat: If no data for 15s, show QR code
+        clearTimeout(heartbeatTimeout);
+        heartbeatTimeout = setTimeout(() => showReconnectUI(), 15000);
+
+        const container = document.getElementById('scroll-container');
+
+        // Scroll Up
+        if (data.action === 'page-up') {
+            const scrollAmount = container.clientHeight * 0.8;
+            container.scrollBy({ top: -scrollAmount, behavior: 'smooth' });
+        }
+
+        // Play/Stop Toggle
         if (data.action === 'toggle') {
+            clearInterval(scrollInterval); // Fix: Prevents speed stacking
             if (data.state) {
                 scrollInterval = setInterval(() => {
-                    document.getElementById('scroll-container').scrollTop += settings.speed;
+                    container.scrollTop += settings.speed;
                 }, 20);
-            } else {
-                clearInterval(scrollInterval);
             }
         }
-/*
-        if (data.action === 'speed-up') settings.speed++;
-        if (data.action === 'speed-down') settings.speed = Math.max(1, settings.speed - 1);
-*/
-        if (data.action === 'speed-up') settings.speed += 0.5;
-        if (data.action === 'speed-down') settings.speed = Math.max(0.1, settings.speed - 0.5);
-        
+
+        // Granular Speed Control (0.5 steps)
+        if (data.action === 'speed-up') {
+            settings.speed += 0.5;
+        }
+        if (data.action === 'speed-down') {
+            settings.speed = Math.max(0.5, settings.speed - 0.5);
+        }
+
+        // Formatting
         if (data.action === 'size-up') settings.size += 5;
         if (data.action === 'size-down') settings.size = Math.max(20, settings.size - 5);
         if (data.action === 'mirror') settings.mirrored = !settings.mirrored;
@@ -83,6 +91,16 @@ function setupHostHandlers() {
         updateDisplay();
         save();
     });
+}
+
+function showReconnectUI() {
+    const status = document.getElementById('status-bar');
+    if (status) {
+        status.style.background = '#c03221';
+        status.innerText = 'DISCONNECTED';
+    }
+    const qr = document.getElementById('qr-overlay');
+    if (qr) qr.style.display = 'flex';
 }
 
 function updateDisplay() {
