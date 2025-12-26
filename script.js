@@ -44,6 +44,18 @@ function setupHostHandlers() {
         document.getElementById('qr-overlay').style.display = 'none';
         lockWake();
     });
+
+    // Handle disconnection
+    conn.on('close', () => {
+        document.getElementById('status-bar').style.background = '#c03221'; // var(--red)
+        document.getElementById('status-bar').innerText = 'DISCONNECTED';
+        document.getElementById('qr-overlay').style.display = 'flex'; // Show QR again
+        
+        // Stop the prompter if it was running
+        if (scrollInterval) {
+            clearInterval(scrollInterval);
+        }
+    });
     
     let scrollInterval;
     conn.on('data', data => {
