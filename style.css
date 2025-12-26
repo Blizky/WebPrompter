@@ -155,13 +155,3 @@ footer a:hover {
   text-decoration: underline;
 }
 
-/*hover button*/
-.btn:hover {
-    background: #0077a3; /* A slightly darker blue */
-    transform: translateY(-1px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.4);
-}
-
-.btn:active {
-    transform: translateY(1px);
-}
