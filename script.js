@@ -45,17 +45,28 @@ function setupHostHandlers() {
         lockWake();
     });
 
-    // Handle disconnection
-    conn.on('close', () => {
-        document.getElementById('status-bar').style.background = '#c03221'; // var(--red)
-        document.getElementById('status-bar').innerText = 'DISCONNECTED';
-        document.getElementById('qr-overlay').style.display = 'flex'; // Show QR again
-        
-        // Stop the prompter if it was running
-        if (scrollInterval) {
-            clearInterval(scrollInterval);
-        }
+// Triggers when the remote is explicitly closed
+    conn.on('close', () => showReconnectUI());
+    
+    // Triggers on network errors
+    conn.on('error', () => showReconnectUI());
+
+    // HEARTBEAT: If we stop receiving data for too long, assume disconnected
+    let timeout;
+    conn.on('data', () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => showReconnectUI(), 10000); // 10s inactivity check
     });
+}
+
+function showReconnectUI() {
+    document.getElementById('status-bar').style.background = '#c03221';
+    document.getElementById('status-bar').innerText = 'DISCONNECTED';
+    document.getElementById('qr-overlay').style.display = 'flex'; // Show QR again
+    // Optional: Stop the prompter so it doesn't keep scrolling while you're away
+    // clearInterval(scrollInterval); 
+}
+    
     
     let scrollInterval;
     conn.on('data', data => {
@@ -80,16 +91,12 @@ function setupHostHandlers() {
                 clearInterval(scrollInterval);
             }
         }
-
-
-        /*
+/*
         if (data.action === 'speed-up') settings.speed++;
         if (data.action === 'speed-down') settings.speed = Math.max(1, settings.speed - 1);
-        */
-        
-        /* cut speed change in half */
-        if (data.action === 'speed-up') settings.speed += 0.5; // Increments by 0.5
-        if (data.action === 'speed-down') settings.speed = Math.max(0.5, settings.speed - 0.5); // Minimum speed of 0.5
+*/
+        if (data.action === 'speed-up') settings.speed += 0.5;
+        if (data.action === 'speed-down') settings.speed = Math.max(0.1, settings.speed - 0.5);
         
         if (data.action === 'size-up') settings.size += 5;
         if (data.action === 'size-down') settings.size = Math.max(20, settings.size - 5);
