@@ -178,3 +178,14 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
+
+
+.status-dot {
+    width: 15px;
+    height: 15px;
+    padding: 0 !important;       /* Remove text padding */
+    border-radius: 50% !important; /* Make it a circle */
+    background: #2ecc71 !important; /* Green */
+    color: transparent;          /* Hide any text */
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.6); /* Optional: nice green glow */
+}
