@@ -58,22 +58,18 @@ function setupHostHandlers() {
         /* Toggle Play/Pause with Smooth Decimal Scrolling */
         if (data.action === 'toggle') {
             if (data.state) {
-                // The "Piggy Bank" for decimal numbers
                 let pixelBank = 0; 
                 
                 scrollInterval = setInterval(() => {
-                    // Add the current speed setting to the bank
                     pixelBank += settings.speed;
                     
-                    // If the bank is full (has at least 1 whole pixel)...
                     if (pixelBank >= 1) {
                         const pixelsToMove = Math.floor(pixelBank); 
                         document.getElementById('scroll-container').scrollTop += pixelsToMove;
                         pixelBank -= pixelsToMove;
                     }
-                    // Update Time Remaining constantly while scrolling
                     updateHUD();
-                }, 20); // 50 updates per second
+                }, 20); 
             } else {
                 clearInterval(scrollInterval);
             }
@@ -89,7 +85,7 @@ function setupHostHandlers() {
         if (data.action === 'mirror') settings.mirrored = !settings.mirrored;
         
         updateDisplay();
-        updateHUD(); // Update stats immediately on button press
+        updateHUD();
         save();
     });
 }
@@ -98,21 +94,22 @@ function updateDisplay() {
     const display = document.getElementById('text-display');
     display.innerText = settings.text;
     display.style.fontSize = settings.size + 'px';
-    display.className = settings.mirrored ? 'mirrored' : '';
+    
+    // IMPORTANT: Apply the mirror class to the CONTAINER, not the text div
+    // This ensures the scroll direction flips along with the text
+    const container = document.getElementById('scroll-container');
+    container.className = settings.mirrored ? 'mirrored' : '';
 }
 
 function updateHUD() {
-    // 1. Update Speed Display
     const speedEl = document.getElementById('hud-speed');
     if(speedEl) speedEl.innerText = settings.speed.toFixed(2);
 
-    // 2. Calculate Time Remaining
     const container = document.getElementById('scroll-container');
     const timeEl = document.getElementById('hud-time');
     
     if(!container || !timeEl) return;
 
-    // Distance left to scroll
     const pixelsRemaining = container.scrollHeight - container.scrollTop - container.clientHeight;
     
     if (pixelsRemaining <= 0) {
@@ -120,13 +117,9 @@ function updateHUD() {
         return;
     }
 
-    // Pixels per second = Speed * 50 (since 20ms interval = 50 updates/sec)
     const pixelsPerSecond = settings.speed * 50;
-    
-    // Total seconds left
     const secondsLeft = pixelsRemaining / pixelsPerSecond;
 
-    // Convert to Minutes:Seconds
     const m = Math.floor(secondsLeft / 60);
     const s = Math.floor(secondsLeft % 60);
     
