@@ -149,6 +149,13 @@ function updateHUD() {
 }
 
 function closePrompter() {
-    // Reloads the page to reset P2P connection and UI
-    window.location.reload();
+    // 1. Tell the remote we are closing
+    if (conn && conn.open) {
+        conn.send({ action: 'close' });
+    }
+    
+    // 2. Short delay to ensure message sends, then reload
+    setTimeout(() => {
+        window.location.reload();
+    }, 100);
 }
