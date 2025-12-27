@@ -219,3 +219,63 @@ footer a:hover {
     color: transparent;          /* Hide any text */
     box-shadow: 0 0 10px rgba(46, 204, 113, 0.6); /* Optional: nice green glow */
 }
+
+/* Help Page Styles */
+.help-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.help-content {
+    background: #222;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #333;
+    overflow-y: auto;
+    flex-grow: 1;
+    line-height: 1.6;
+}
+
+.help-content h1 {
+    font-size: 1.5rem;
+    margin-top: 0;
+    color: var(--blue);
+}
+
+.help-content li {
+    margin-bottom: 10px;
+    color: #ddd;
+}
+
+.help-link {
+    color: #666;
+    text-decoration: none;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    text-align: center;
+    transition: color 0.2s;
+}
+
+.help-link:hover {
+    color: var(--yellow);
+    text-decoration: underline;
+}
+
+/* Special box for the Audio Tip */
+.pro-tip {
+    background: rgba(255, 204, 51, 0.1); /* Low opacity yellow */
+    border: 1px solid var(--yellow);
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.pro-tip h3 {
+    color: var(--yellow);
+    margin-top: 0;
+}
