@@ -19,7 +19,7 @@ function startHost() {
     document.getElementById('edit-mode').style.display = 'none';
     document.getElementById('prompter-mode').style.display = 'block';
     updateDisplay();
-    updateHUD(); // Show initial stats
+    updateHUD(); 
     initP2P();
     if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
 }
@@ -32,6 +32,8 @@ function initP2P() {
         new QRCode(document.getElementById("qrcode"), { text: url, width: 256, height: 256 });
         document.getElementById('qr-overlay').style.display = 'flex';
     });
+    
+    // Listen for incoming connections
     peer.on('connection', c => {
         conn = c;
         setupHostHandlers();
@@ -39,14 +41,34 @@ function initP2P() {
 }
 
 function setupHostHandlers() {
+    let scrollInterval; // Keep this variable here so we can clear it on disconnect
+
     conn.on('open', () => {
-        document.getElementById('status-bar').style.background = '#2ecc71';
-        document.getElementById('status-bar').innerText = 'CONNECTED';
+        // 1. CHANGE TO DOT
+        const sb = document.getElementById('status-bar');
+        sb.classList.add('status-dot');
+        sb.innerText = ''; // Clear text
+        
+        // Hide QR Overlay
         document.getElementById('qr-overlay').style.display = 'none';
         lockWake();
     });
     
-    let scrollInterval;
+    // 2. DETECT DISCONNECTION
+    conn.on('close', () => {
+        // Stop scrolling if it was running
+        if(scrollInterval) clearInterval(scrollInterval);
+        
+        // Reset UI: Remove Dot, Show Text
+        const sb = document.getElementById('status-bar');
+        sb.classList.remove('status-dot');
+        sb.innerText = 'WAITING FOR REMOTE...';
+        sb.style.background = 'var(--red)'; // Reset to red
+        
+        // Show QR Code again for reconnection
+        document.getElementById('qr-overlay').style.display = 'flex';
+    });
+    
     conn.on('data', data => {
         /* scroll up logic */
         const container = document.getElementById('scroll-container');
@@ -55,14 +77,12 @@ function setupHostHandlers() {
             container.scrollBy({ top: -scrollAmount, behavior: 'smooth' });
         }
 
-        /* Toggle Play/Pause with Smooth Decimal Scrolling */
+        /* Toggle Play/Pause */
         if (data.action === 'toggle') {
             if (data.state) {
                 let pixelBank = 0; 
-                
                 scrollInterval = setInterval(() => {
                     pixelBank += settings.speed;
-                    
                     if (pixelBank >= 1) {
                         const pixelsToMove = Math.floor(pixelBank); 
                         document.getElementById('scroll-container').scrollTop += pixelsToMove;
@@ -75,11 +95,9 @@ function setupHostHandlers() {
             }
         }
 
-        /* Speed Control (Decimal Steps) */
+        /* Settings Updates */
         if (data.action === 'speed-up') settings.speed += 0.25;
         if (data.action === 'speed-down') settings.speed = Math.max(0.25, settings.speed - 0.25);
-        
-        /* Other Controls */
         if (data.action === 'size-up') settings.size += 5;
         if (data.action === 'size-down') settings.size = Math.max(20, settings.size - 5);
         if (data.action === 'mirror') settings.mirrored = !settings.mirrored;
@@ -94,9 +112,6 @@ function updateDisplay() {
     const display = document.getElementById('text-display');
     display.innerText = settings.text;
     display.style.fontSize = settings.size + 'px';
-    
-    // IMPORTANT: Apply the mirror class to the CONTAINER, not the text div
-    // This ensures the scroll direction flips along with the text
     const container = document.getElementById('scroll-container');
     container.className = settings.mirrored ? 'mirrored' : '';
 }
