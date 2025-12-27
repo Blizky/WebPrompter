@@ -52,6 +52,9 @@ function setupHostHandlers() {
         // Hide QR Overlay
         document.getElementById('qr-overlay').style.display = 'none';
         lockWake();
+        
+        // Send initial HUD data to remote immediately
+        updateHUD();
     });
     
     // 2. DETECT DISCONNECTION
@@ -75,6 +78,8 @@ function setupHostHandlers() {
         if (data.action === 'page-up') {
             const scrollAmount = container.clientHeight * 0.8;
             container.scrollBy({ top: -scrollAmount, behavior: 'smooth' });
+            // Update HUD after manual scroll to refresh time
+            setTimeout(updateHUD, 500);
         }
 
         /* Toggle Play/Pause */
@@ -117,26 +122,40 @@ function updateDisplay() {
 }
 
 function updateHUD() {
-    const speedEl = document.getElementById('hud-speed');
-    if(speedEl) speedEl.innerText = settings.speed.toFixed(2);
+    // We now send data to the remote instead of updating local DOM
+    if (!conn || !conn.open) return;
 
     const container = document.getElementById('scroll-container');
-    const timeEl = document.getElementById('hud-time');
-    
-    if(!container || !timeEl) return;
+    let timeStr = "00:00";
 
-    const pixelsRemaining = container.scrollHeight - container.scrollTop - container.clientHeight;
-    
-    if (pixelsRemaining <= 0) {
-        timeEl.innerText = "00:00";
-        return;
+    if(container) {
+        const pixelsRemaining = container.scrollHeight - container.scrollTop - container.clientHeight;
+        
+        if (pixelsRemaining > 0) {
+            const pixelsPerSecond = settings.speed * 50;
+            const secondsLeft = pixelsRemaining / pixelsPerSecond;
+
+            const m = Math.floor(secondsLeft / 60);
+            const s = Math.floor(secondsLeft % 60);
+            timeStr = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
     }
 
-    const pixelsPerSecond = settings.speed * 50;
-    const secondsLeft = pixelsRemaining / pixelsPerSecond;
+    conn.send({
+        action: 'hud-update',
+        speed: settings.speed.toFixed(2),
+        time: timeStr
+    });
+}
 
-    const m = Math.floor(secondsLeft / 60);
-    const s = Math.floor(secondsLeft % 60);
+function closePrompter() {
+    // 1. Tell the remote we are closing
+    if (conn && conn.open) {
+        conn.send({ action: 'close' });
+    }
     
-    timeEl.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    // 2. Short delay to ensure message sends, then reload
+    setTimeout(() => {
+        window.location.reload();
+    }, 100);
 }

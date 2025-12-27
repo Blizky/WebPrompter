@@ -10,20 +10,23 @@
 <body>
     <div id="edit-mode">
         <div class="header-container">
-          <span class="app_icon">💬</span><span class="app_title">WebPrompter.app</span>
+          <span class="app_icon">💬</span>
+          <span class="app_title">
+              <span style="color: var(--white);">Web</span>Prompter<span class="title-suffix">.app</span>
+          </span>
         </div>
         <textarea id="script-input" placeholder="1. Open this page on your iPad or Tablet. &#10;2. Paste your script here... &#10;3. Launch and scan the QR code with your Phone to use it as a Remote."></textarea>
         <button class="btn" onclick="startHost()">Launch Prompter & Remote</button>
     </div>
 
     <div id="prompter-mode">
-        <div id="prompter-hud">
-            <span>SPEED: <span id="hud-speed">1.0</span></span>
-            <span style="margin-left: 20px;">TIME: <span id="hud-time">--:--</span></span>
+        <div id="scroll-container"><div id="text-display"></div></div>
+        
+        <div id="footer-controls">
+            <button id="close-btn" onclick="closePrompter()">CLOSE</button>
+            <div id="status-bar">WAITING FOR REMOTE...</div>
         </div>
 
-        <div id="scroll-container"><div id="text-display"></div></div>
-        <div id="status-bar">WAITING FOR REMOTE...</div>
         <div id="qr-overlay">
             <div id="qrcode" style="padding:20px; background:white; border-radius:10px;"></div>
             <p style="color:var(--yellow); font-weight:bold; margin-top:20px;">Scan with your Phone to open Remote</p>

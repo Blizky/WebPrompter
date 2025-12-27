@@ -66,21 +66,6 @@ textarea {
     transform: scaleY(-1); 
 }
 
-/* NEW: Heads-Up Display (HUD) */
-#prompter-hud {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: 1px solid var(--yellow);
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--white);
-    z-index: 1000;
-}
-
 /* UI Elements */
 
 /* button */
@@ -101,49 +86,94 @@ textarea {
     box-shadow: 0 10px 20px rgba(0,0,0,0.35);
 }
 
-#status-bar {
-    position: fixed; bottom: 15px; right: 15px; padding: 5px 12px;
-    border-radius: 20px; font-size: 12px; font-weight: bold; background: var(--red);
+/* --- FOOTER CONTROLS (Status + Close) --- */
+
+#footer-controls {
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1002;
 }
+
+#status-bar {
+    padding: 5px 12px;
+    border-radius: 20px; 
+    font-size: 12px; 
+    font-weight: bold; 
+    background: var(--red);
+    transition: all 0.3s ease;
+}
+
+#close-btn {
+    background: transparent;
+    color: var(--yellow);
+    border: 1px solid var(--yellow);
+    border-radius: 50px; /* Capsule Shape */
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#close-btn:hover {
+    background: rgba(255, 204, 51, 0.15); /* Subtle yellow tint on hover */
+    box-shadow: 0 0 10px rgba(255, 204, 51, 0.2);
+}
+
+/* -------------------------------------- */
 
 #qr-overlay {
     position: fixed; inset: 0; background: rgba(0,0,0,0.95);
     display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100;
 }
 
-/* Container for the icon and title */
-h1 {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; 
-  text-decoration: none;
+/* --- HEADER / TITLE STYLING --- */
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px; 
 }
 
-/* The Mirrored Emoji (Icon) */
+/* The Mirrored Emoji (Icon) with GLOW */
 .app_icon {
   display: inline-block;
-  transform: scaleX(-1); /* Mirrors the emoji horizontally (keep this for icon) */
-  font-size: 24px;
-  margin-right: 10px;
+  transform: scaleX(-1);
+  font-size: 28px;
+  margin-right: 12px;
   line-height: 1;
+  filter: drop-shadow(0 0 8px rgba(0, 153, 204, 0.5)); /* Blue Glow */
 }
 
-/* The Title Text */
-.app_title {
+/* Shared Title Styles */
+.app_title, .app_title_remote {
   color: var(--blue);
-  font-family: sans-serif;
-  font-size: 2rem;
-  font-weight: bold;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800; /* Extra Bold */
+  letter-spacing: -1px;
   vertical-align: middle;
 }
 
-.app_title_remote {
-  color: var(--blue);
-  font-family: sans-serif;
-  font-size: 1.5rem;
-  font-weight: bold;
-  vertical-align: middle;
+.app_title { font-size: 2.2rem; }
+.app_title_remote { font-size: 1.8rem; }
+
+/* The .app extension */
+.title-suffix {
+    color: var(--white);
+    opacity: 0.5;
+    font-weight: 400;
+    font-size: 0.6em; 
+    margin-left: 2px;
 }
+
+/* ------------------------------- */
 
 .bliz-footer {
     text-align: center;
