@@ -19,6 +19,7 @@ function startHost() {
     document.getElementById('edit-mode').style.display = 'none';
     document.getElementById('prompter-mode').style.display = 'block';
     updateDisplay();
+    updateHUD(); // Show initial stats
     initP2P();
     if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
 }
@@ -47,28 +48,14 @@ function setupHostHandlers() {
     
     let scrollInterval;
     conn.on('data', data => {
-        /* scroll up */
+        /* scroll up logic */
         const container = document.getElementById('scroll-container');
         if (data.action === 'page-up') {
-                // Move up by 80% of the container height to keep some context
-                const scrollAmount = container.clientHeight * 0.8;
-                container.scrollBy({
-                    top: -scrollAmount,
-                    behavior: 'smooth'
-                });
-            }
-
-        /*
-        if (data.action === 'toggle') {
-            if (data.state) {
-                scrollInterval = setInterval(() => {
-                    document.getElementById('scroll-container').scrollTop += settings.speed;
-                }, 20);
-            } else {
-                clearInterval(scrollInterval);
-            }
+            const scrollAmount = container.clientHeight * 0.8;
+            container.scrollBy({ top: -scrollAmount, behavior: 'smooth' });
         }
-*/
+
+        /* Toggle Play/Pause with Smooth Decimal Scrolling */
         if (data.action === 'toggle') {
             if (data.state) {
                 // The "Piggy Bank" for decimal numbers
@@ -80,35 +67,29 @@ function setupHostHandlers() {
                     
                     // If the bank is full (has at least 1 whole pixel)...
                     if (pixelBank >= 1) {
-                        const pixelsToMove = Math.floor(pixelBank); // Take the whole number
-                        
-                        // Physically move the screen
+                        const pixelsToMove = Math.floor(pixelBank); 
                         document.getElementById('scroll-container').scrollTop += pixelsToMove;
-                        
-                        // Keep the change (decimals) for the next loop
                         pixelBank -= pixelsToMove;
                     }
-                }, 20); // Keeps the smooth 50 updates per second
+                    // Update Time Remaining constantly while scrolling
+                    updateHUD();
+                }, 20); // 50 updates per second
             } else {
                 clearInterval(scrollInterval);
             }
         }
 
-       /* 
-        if (data.action === 'speed-up') settings.speed++;
-        if (data.action === 'speed-down') settings.speed = Math.max(1, settings.speed - 1);
-        */
-
-        // Increase speed by small steps (0.25)
+        /* Speed Control (Decimal Steps) */
         if (data.action === 'speed-up') settings.speed += 0.25;
-        // Decrease speed by small steps, allowing it to go very slow (0.25)
         if (data.action === 'speed-down') settings.speed = Math.max(0.25, settings.speed - 0.25);
         
+        /* Other Controls */
         if (data.action === 'size-up') settings.size += 5;
         if (data.action === 'size-down') settings.size = Math.max(20, settings.size - 5);
         if (data.action === 'mirror') settings.mirrored = !settings.mirrored;
         
         updateDisplay();
+        updateHUD(); // Update stats immediately on button press
         save();
     });
 }
@@ -118,4 +99,36 @@ function updateDisplay() {
     display.innerText = settings.text;
     display.style.fontSize = settings.size + 'px';
     display.className = settings.mirrored ? 'mirrored' : '';
+}
+
+function updateHUD() {
+    // 1. Update Speed Display
+    const speedEl = document.getElementById('hud-speed');
+    if(speedEl) speedEl.innerText = settings.speed.toFixed(2);
+
+    // 2. Calculate Time Remaining
+    const container = document.getElementById('scroll-container');
+    const timeEl = document.getElementById('hud-time');
+    
+    if(!container || !timeEl) return;
+
+    // Distance left to scroll
+    const pixelsRemaining = container.scrollHeight - container.scrollTop - container.clientHeight;
+    
+    if (pixelsRemaining <= 0) {
+        timeEl.innerText = "00:00";
+        return;
+    }
+
+    // Pixels per second = Speed * 50 (since 20ms interval = 50 updates/sec)
+    const pixelsPerSecond = settings.speed * 50;
+    
+    // Total seconds left
+    const secondsLeft = pixelsRemaining / pixelsPerSecond;
+
+    // Convert to Minutes:Seconds
+    const m = Math.floor(secondsLeft / 60);
+    const s = Math.floor(secondsLeft % 60);
+    
+    timeEl.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 }
