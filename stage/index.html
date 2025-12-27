@@ -9,9 +9,14 @@
 </head>
 <body>
     <div id="edit-mode">
+        
         <div class="header-container">
-          <span class="app_icon">💬</span><span class="app_title">WebPrompter.app</span>
+            <span class="app_icon">💬</span>
+            <span class="app_title_remote">
+                <span style="color: var(--white);">Web</span>Prompter<span class="title-suffix">.app</span>
+            </span>
         </div>
+        
         <textarea id="script-input" placeholder="1. Open this page on your iPad or Tablet. &#10;2. Paste your script here... &#10;3. Launch and scan the QR code with your Phone to use it as a Remote."></textarea>
         <button class="btn" onclick="startHost()">Launch Prompter & Remote</button>
     </div>
