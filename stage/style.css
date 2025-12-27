@@ -155,3 +155,17 @@ footer a:hover {
   text-decoration: underline;
 }
 
+#prompter-hud {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 1px solid var(--yellow);
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--white);
+    z-index: 1000;
+}
+
