@@ -70,9 +70,17 @@ function setupHostHandlers() {
         }
 
 
-        
+        /*
         if (data.action === 'speed-up') settings.speed++;
         if (data.action === 'speed-down') settings.speed = Math.max(1, settings.speed - 1);
+        */
+        
+        // Increases speed by 0.25 instead of 1
+        if (data.action === 'speed-up') settings.speed += 0.25; 
+        
+        // Decreases speed by 0.25, and allows it to go as slow as 0.25 (instead of stopping at 1)
+        if (data.action === 'speed-down') settings.speed = Math.max(0.25, settings.speed - 0.25);
+        
         if (data.action === 'size-up') settings.size += 5;
         if (data.action === 'size-down') settings.size = Math.max(20, settings.size - 5);
         if (data.action === 'mirror') settings.mirrored = !settings.mirrored;
