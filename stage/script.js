@@ -147,3 +147,8 @@ function updateHUD() {
         time: timeStr
     });
 }
+
+function closePrompter() {
+    // Reloads the page to reset P2P connection and UI
+    window.location.reload();
+}
