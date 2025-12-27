@@ -1,0 +1,157 @@
+:root {
+    --blue: #0099CC; --yellow: #FFCC33; --white: #FDFDF9;
+    --black: #1A1A1A; --red: #c03221;
+}
+
+body, html { 
+    margin: 0; padding: 0; height: 100%; 
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--black); color: var(--white);
+    overflow: hidden;
+}
+
+
+/* Edit Mode container - covers the page */
+#edit-mode { 
+    background: var(--black); 
+	color: var(--black);
+    display: flex; 
+	flex-direction: column; 
+	height: 100vh; 
+	padding: 20px; 
+	box-sizing: border-box;
+
+}
+
+textarea { 
+    flex-grow: 0; 
+	height: 50vh;
+	/* min-height: 200px; /* Ensures it's not too small on tiny screens */
+    /*max-height: 50vh;  /* Prevents it from taking more than half the screen */
+	
+	margin: 15px 0; 
+	padding: 20px; 
+	border: 2px solid var(--yellow);
+    font-size: 1.2rem; 
+	border-radius: 10px; 
+	resize: none;
+}
+
+/* Prompter Display */
+#prompter-mode { 
+	display: none; 
+	height: 100vh;
+	/* To fix full screen functionality */
+    position: fixed;
+    inset: 0;        /* This is a shortcut for top:0, left:0, right:0, bottom:0 */
+    z-index: 999;    /* This ensures it sits on top of the footer/textarea */
+}
+
+#scroll-container {
+    height: 100%; overflow-y: scroll; padding: 45vh 5vw;
+    scroll-behavior: auto; /* Smoother for manual control */
+}
+#text-display { font-size: 90px; line-height: 1.5; white-space: pre-wrap; transition: transform 0.3s; }
+.mirrored { transform: scaleX(-1); }
+
+/* UI Elements */
+
+
+/* button*/
+.btn {
+	background: var(--blue);
+	color: #ffffff;
+	border: none;
+	padding:10px 30px;
+	border-radius: 8px;
+	font-weight: 700;
+	font-size: 1.5rem;
+	cursor: pointer;
+	text-decoration: none;
+	min-width: auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+}
+/*end button */
+
+
+
+#status-bar {
+    position: fixed; bottom: 15px; right: 15px; padding: 5px 12px;
+    border-radius: 20px; font-size: 12px; font-weight: bold; background: var(--red);
+}
+#qr-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+    display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100;
+}
+
+/* Container for the icon and title */
+h1 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Adjust to 'flex-start' if you want it left-aligned */
+  text-decoration: none;
+}
+
+/* The Mirrored Emoji */
+.app_icon {
+  display: inline-block;
+  transform: scaleX(-1); /* Mirrors the emoji */
+  font-size: 24px;
+  margin-right: 10px;
+  line-height: 1;
+}
+
+/* The Title Text */
+.app_title {
+  color: var(--blue);
+  font-family: sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.app_title_remote {
+  color: var(--blue);
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.bliz-footer {
+    text-align: center;
+    padding: 20px 0;
+    font-size: 0.9rem;
+    color: #666; /* Subtle grey so it doesn't distract from the main buttons */
+    background: transparent;
+}
+
+.heart {
+    color: var(--red); /* Uses your #c03221 red */
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.bliz-footer:hover .heart {
+    transform: scale(1.2);
+}
+
+.icon-kofi {
+  width: 20px;
+  height: 20px;
+  vertical-align: -4px;
+}
+
+footer a {
+  color: var(--yellow);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
