@@ -10,78 +10,102 @@ body, html {
     overflow: hidden;
 }
 
-
 /* Edit Mode container - covers the page */
 #edit-mode { 
     background: var(--black); 
-	color: var(--black);
+    color: var(--black);
     display: flex; 
-	flex-direction: column; 
-	height: 100vh; 
-	padding: 20px; 
-	box-sizing: border-box;
-
+    flex-direction: column; 
+    height: 100vh; 
+    padding: 20px; 
+    box-sizing: border-box;
 }
 
 textarea { 
     flex-grow: 0; 
-	height: 50vh;
-	/* min-height: 200px; /* Ensures it's not too small on tiny screens */
-    /*max-height: 50vh;  /* Prevents it from taking more than half the screen */
-	
-	margin: 15px 0; 
-	padding: 20px; 
-	border: 2px solid var(--yellow);
+    height: 50vh;
+    margin: 15px 0; 
+    padding: 20px; 
+    border: 2px solid var(--yellow);
     font-size: 1.2rem; 
-	border-radius: 10px; 
-	resize: none;
+    border-radius: 10px; 
+    resize: none;
 }
 
 /* Prompter Display */
 #prompter-mode { 
-	display: none; 
-	height: 100vh;
-	/* To fix full screen functionality */
+    display: none; 
+    height: 100vh;
+    /* To fix full screen functionality */
     position: fixed;
     inset: 0;        /* This is a shortcut for top:0, left:0, right:0, bottom:0 */
     z-index: 999;    /* This ensures it sits on top of the footer/textarea */
 }
 
+/* CHANGED: Added transition here so the whole container flips smoothly.
+   We apply the mirror transform to THIS container now.
+*/
 #scroll-container {
-    height: 100%; overflow-y: scroll; padding: 45vh 5vw;
+    height: 100%; 
+    overflow-y: scroll; 
+    padding: 45vh 5vw;
     scroll-behavior: auto; /* Smoother for manual control */
+    transition: transform 0.3s; 
 }
-#text-display { font-size: 90px; line-height: 1.5; white-space: pre-wrap; transition: transform 0.3s; }
-.mirrored { transform: scaleX(-1); }
+
+#text-display { 
+    font-size: 90px; 
+    line-height: 1.5; 
+    white-space: pre-wrap; 
+}
+
+/* CHANGED: Vertical Flip for Teleprompter Glass.
+   When applied to the container, it flips text Upside Down AND reverses scroll direction.
+*/
+.mirrored { 
+    transform: scaleY(-1); 
+}
+
+/* NEW: Heads-Up Display (HUD) */
+#prompter-hud {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 1px solid var(--yellow);
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--white);
+    z-index: 1000;
+}
 
 /* UI Elements */
 
-
-/* button*/
+/* button */
 .btn {
-	background: var(--blue);
-	color: #ffffff;
-	border: none;
-	padding:10px 30px;
-	border-radius: 8px;
-	font-weight: 700;
-	font-size: 1.5rem;
-	cursor: pointer;
-	text-decoration: none;
-	min-width: auto;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+    background: var(--blue);
+    color: #ffffff;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    min-width: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.35);
 }
-/*end button */
-
-
 
 #status-bar {
     position: fixed; bottom: 15px; right: 15px; padding: 5px 12px;
     border-radius: 20px; font-size: 12px; font-weight: bold; background: var(--red);
 }
+
 #qr-overlay {
     position: fixed; inset: 0; background: rgba(0,0,0,0.95);
     display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100;
@@ -91,14 +115,14 @@ textarea {
 h1 {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Adjust to 'flex-start' if you want it left-aligned */
+  justify-content: flex-start; 
   text-decoration: none;
 }
 
-/* The Mirrored Emoji */
+/* The Mirrored Emoji (Icon) */
 .app_icon {
   display: inline-block;
-  transform: scaleX(-1); /* Mirrors the emoji */
+  transform: scaleX(-1); /* Mirrors the emoji horizontally (keep this for icon) */
   font-size: 24px;
   margin-right: 10px;
   line-height: 1;
@@ -125,12 +149,12 @@ h1 {
     text-align: center;
     padding: 20px 0;
     font-size: 0.9rem;
-    color: #666; /* Subtle grey so it doesn't distract from the main buttons */
+    color: #666; 
     background: transparent;
 }
 
 .heart {
-    color: var(--red); /* Uses your #c03221 red */
+    color: var(--red); 
     display: inline-block;
     transition: transform 0.3s ease;
 }
@@ -154,18 +178,3 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
-
-#prompter-hud {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: 1px solid var(--yellow);
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--white);
-    z-index: 1000;
-}
-
