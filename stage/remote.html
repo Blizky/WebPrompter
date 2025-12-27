@@ -19,7 +19,7 @@
             grid-template-columns: 1fr 1fr; 
             gap: 15px; 
             width: 100%; 
-            transition: opacity 0.5s ease; /* Smooth fade out */
+            transition: opacity 0.5s ease;
         }
         
         .btn-large { 
@@ -61,10 +61,10 @@
         }
         #remote-hud span { color: var(--white); font-weight: bold; }
         
-        /* New class for when session is dead */
+        /* Disabled State */
         .controls-disabled {
             opacity: 0.3;
-            pointer-events: none; /* Disables all clicks */
+            pointer-events: none;
         }
         
         .status-subtext {
@@ -111,32 +111,48 @@
         const peer = new Peer();
         let conn;
         let active = false;
+        let isConnected = false;
+
+        // 1. START TIMEOUT IMMEDIATELY (5 Seconds)
+        const connectionTimer = setTimeout(() => {
+            if (!isConnected) {
+                endSession("CONNECTION FAILED");
+                document.getElementById('rm-substatus').innerText = "Host not found. Check internet or scan again.";
+            }
+        }, 5000);
 
         peer.on('open', () => {
             conn = peer.connect(targetId);
             
             conn.on('open', () => {
+                // 2. CONNECTION SUCCESS - CANCEL TIMER
+                clearTimeout(connectionTimer);
+                isConnected = true;
+
                 document.getElementById('rm-status').innerText = 'CONNECTED';
                 document.getElementById('rm-status').style.color = '#2ecc71';
             });
             
-            // Handle disconnection (Host closed or refreshed)
             conn.on('close', () => {
                 endSession();
             });
 
-            // Listen for data/updates from Host
             conn.on('data', (data) => {
                 if(data.action === 'hud-update') {
                     document.getElementById('disp-speed').innerText = data.speed;
                     document.getElementById('disp-time').innerText = data.time;
                 }
-                
-                // Specific 'close' action sent by our script logic
                 if(data.action === 'close') {
                     endSession();
                 }
             });
+        });
+
+        // Handle PeerJS Errors (e.g., ID doesn't exist)
+        peer.on('error', (err) => {
+            clearTimeout(connectionTimer); // Stop the generic timer
+            endSession("CONNECTION FAILED"); // Show failed immediately
+            console.error(err);
         });
 
         function send(action) { if(conn) conn.send({action}); }
@@ -148,14 +164,17 @@
             conn.send({action: 'toggle', state: active});
         };
         
-        function endSession() {
+        function endSession(msg = 'SESSION ENDED') {
             // Update Text
             const status = document.getElementById('rm-status');
-            status.innerText = 'SESSION ENDED';
+            status.innerText = msg;
             status.style.color = 'var(--red)';
             
+            // Only update subtext if it's empty (preserves timeout message)
             const sub = document.getElementById('rm-substatus');
-            sub.innerText = 'Please close this tab and scan the new QR code.';
+            if(sub.innerText === "") {
+                 sub.innerText = 'Please close this tab and scan the new QR code.';
+            }
             
             // Disable UI
             document.getElementById('main-controls').classList.add('controls-disabled');
