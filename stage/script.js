@@ -58,7 +58,7 @@ function setupHostHandlers() {
                 });
             }
 
-        
+        /*
         if (data.action === 'toggle') {
             if (data.state) {
                 scrollInterval = setInterval(() => {
@@ -68,17 +68,40 @@ function setupHostHandlers() {
                 clearInterval(scrollInterval);
             }
         }
+*/
+        if (data.action === 'toggle') {
+            if (data.state) {
+                // The "Piggy Bank" for decimal numbers
+                let pixelBank = 0; 
+                
+                scrollInterval = setInterval(() => {
+                    // Add the current speed setting to the bank
+                    pixelBank += settings.speed;
+                    
+                    // If the bank is full (has at least 1 whole pixel)...
+                    if (pixelBank >= 1) {
+                        const pixelsToMove = Math.floor(pixelBank); // Take the whole number
+                        
+                        // Physically move the screen
+                        document.getElementById('scroll-container').scrollTop += pixelsToMove;
+                        
+                        // Keep the change (decimals) for the next loop
+                        pixelBank -= pixelsToMove;
+                    }
+                }, 20); // Keeps the smooth 50 updates per second
+            } else {
+                clearInterval(scrollInterval);
+            }
+        }
 
-
-        /*
+       /* 
         if (data.action === 'speed-up') settings.speed++;
         if (data.action === 'speed-down') settings.speed = Math.max(1, settings.speed - 1);
         */
-        
-        // Increases speed by 0.25 instead of 1
-        if (data.action === 'speed-up') settings.speed += 0.25; 
-        
-        // Decreases speed by 0.25, and allows it to go as slow as 0.25 (instead of stopping at 1)
+
+        // Increase speed by small steps (0.25)
+        if (data.action === 'speed-up') settings.speed += 0.25;
+        // Decrease speed by small steps, allowing it to go very slow (0.25)
         if (data.action === 'speed-down') settings.speed = Math.max(0.25, settings.speed - 0.25);
         
         if (data.action === 'size-up') settings.size += 5;
