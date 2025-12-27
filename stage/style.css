@@ -107,12 +107,13 @@ h1 {
 }
 
 /* The Mirrored Emoji (Icon) */
+/* Add a subtle blue glow to the emoji icon */
 .app_icon {
-  display: inline-block;
-  transform: scaleX(-1); /* Mirrors the emoji horizontally (keep this for icon) */
-  font-size: 24px;
-  margin-right: 10px;
-  line-height: 1;
+    display: inline-block;
+    transform: scaleX(-1);
+    font-size: 28px; /* Slightly larger */
+    margin-right: 12px;
+    filter: drop-shadow(0 0 8px rgba(0, 153, 204, 0.5)); /* Blue glow */
 }
 
 /* The Title Text */
@@ -124,12 +125,22 @@ h1 {
   vertical-align: middle;
 }
 
+/* Refined Title Typography */
 .app_title_remote {
-  color: var(--blue);
-  font-family: sans-serif;
-  font-size: 1.5rem;
-  font-weight: bold;
-  vertical-align: middle;
+    color: var(--blue);
+    font-family: 'Inter', sans-serif; /* Ensure it uses the nice font */
+    font-size: 1.8rem; /* Slightly larger presence */
+    font-weight: 800;  /* Extra bold looks more "Logo-like" */
+    letter-spacing: -1px; /* Tighter letters look more professional */
+}
+
+/* The small .app extension */
+.title-suffix {
+    color: var(--white);
+    opacity: 0.5;
+    font-weight: 400;
+    font-size: 0.6em; /* Smaller relative to title */
+    margin-left: 2px;
 }
 
 .bliz-footer {
@@ -176,3 +187,13 @@ footer a:hover {
     color: transparent;          /* Hide any text */
     box-shadow: 0 0 10px rgba(46, 204, 113, 0.6); /* Optional: nice green glow */
 }
+
+/* Update the container to ensure perfect vertical centering */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px; /* Adds a little space between title and status */
+}
+
+
