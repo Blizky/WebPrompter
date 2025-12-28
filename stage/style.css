@@ -332,17 +332,17 @@ footer a:hover {
     text-decoration: underline;
 }
 
-/* Optional: Forces the reset icon to match the red button color if it's black SVG */
-/* Note: The inline 'filter' in HTML handles this, but you can remove that style if your SVG is already red. */
 
 /* Special Icon for the Yellow Header */
 .icon-header {
     width: 32px;
-    height: 32px;
-        /* 1. Turn black SVG to White */
-    filter: invert(1);
+    height: 32px;    
+    filter: invert(1); /* 1. Turn black SVG to White */
     margin-right: 10px; /* Space between icon and text */
+/* 1. Set the REAL color here */
+    background-color: var(--yellow); 
     
-    /* This filter turns a Black SVG into Yellow (#FFCC33) */
-    filter: invert(81%) sepia(35%) saturate(936%) hue-rotate(358deg) brightness(102%) contrast(104%);
+    /* 2. Use the SVG as a "stamp" to cut out the shape */
+    -webkit-mask: url('assets/radio.svg') no-repeat center / contain;
+    mask: url('assets/radio.svg') no-repeat center / contain;
 }
