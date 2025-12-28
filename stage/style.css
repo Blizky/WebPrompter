@@ -337,12 +337,7 @@ footer a:hover {
 .icon-header {
     width: 32px;
     height: 32px;    
-    filter: invert(1); /* 1. Turn black SVG to White */
     margin-right: 10px; /* Space between icon and text */
-/* 1. Set the REAL color here */
     background-color: var(--yellow); 
-    
-    /* 2. Use the SVG as a "stamp" to cut out the shape */
-    -webkit-mask: url('assets/radio.svg') no-repeat center / contain;
-    mask: url('assets/radio.svg') no-repeat center / contain;
+    filter: invert(1); 
 }
