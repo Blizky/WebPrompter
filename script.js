@@ -115,9 +115,15 @@ function setupHostHandlers() {
 
 function updateDisplay() {
     const display = document.getElementById('text-display');
-    display.innerText = settings.text;
-    display.style.fontSize = settings.size + 'px';
     const container = document.getElementById('scroll-container');
+    
+    // FIX: Add 4 blank lines to the top ONLY when mirrored
+    // This pushes the text into view so the first lines aren't cut off
+    const prefix = settings.mirrored ? '\n\n\n\n' : '';
+    
+    display.innerText = prefix + settings.text;
+    display.style.fontSize = settings.size + 'px';
+    
     container.className = settings.mirrored ? 'mirrored' : '';
 }
 
