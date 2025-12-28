@@ -19,7 +19,7 @@
 </head>
 <body>
 
-    <div id="mobile-welcome">
+    <div id="mobile-welcome" style="display: none;">
         <div class="mw-content">
             <img src="assets/IMG_5847.jpg" alt="Setup Example" class="mw-image">
             
@@ -60,13 +60,32 @@
             <p style="color:var(--yellow); font-weight:bold; margin-top:20px;">Scan with your Phone to open Remote</p>
         </div>
     </div>
+    
     <script src="script.js"></script>
     <script>
-        // Check if we are opening as a remote instead of host
+        // 1. Redirect if Remote URL parameter exists
         if (window.location.search.includes('remote')) {
             window.location.href = 'remote.html' + window.location.search;
         }
+
+        // 2. Load settings
         document.getElementById('script-input').value = settings.text;
+
+        // 3. UNIVERSAL MOBILE DETECTION
+        // We check the User Agent string for specific mobile identifiers.
+        // This effectively targets Phones while letting iPads/Tablets pass through.
+        function checkMobile() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            // Detects iPhone, iPod, Android Mobile (but usually excludes tablets), BlackBerry, etc.
+            const isPhone = /iPhone|iPod|Android.*Mobile|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+            
+            if (isPhone) {
+                document.getElementById('mobile-welcome').style.display = 'flex';
+            }
+        }
+        
+        // Run check
+        checkMobile();
     </script>
     <script src="https://cdn.counter.dev/script.js" data-id="dd7fb35a-238d-4948-a5a8-694b141e7608" data-utcoffset="-6"></script>
 </body>
