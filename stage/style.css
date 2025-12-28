@@ -280,44 +280,6 @@ footer a:hover {
     margin-top: 0;
 }
 
-/* Contact Buttons in Help Page */
-.feedback-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Two side-by-side */
-    gap: 15px;
-    margin-top: 15px;
-}
-
-.btn-contact {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.95rem;
-    transition: transform 0.2s, opacity 0.2s;
-    color: var(--white) !important; /* Force white text */
-}
-
-.btn-contact:hover {
-    transform: translateY(-2px);
-    opacity: 0.9;
-    text-decoration: none;
-}
-
-/* Email Button - Primary Blue */
-.btn-email {
-    background: var(--blue);
-    border: none;
-}
-
-/* Reddit Button - Dark Grey with Border */
-.btn-reddit {
-    background: #333;
-    border: 1px solid var(--white);
-}
 
 /* Mobile tweak: Stack them on small screens */
 @media (max-width: 500px) {
