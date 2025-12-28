@@ -52,22 +52,24 @@
 
             <hr>
 
-            <h1>🐛 Feedback & Support</h1>
+<h1>🐛 Feedback & Support</h1>
             <p>Found a bug? Have a feature request? Let me know!</p>
             
-            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div class="contact-list">
                 
-                <a href="mailto:alex.blizky@gmail.com?subject=WebPrompter%20Feedback" 
-                   class="btn" 
-                   style="font-size: 1.2rem; flex-grow: 1; background: #333; border: 1px solid white;">
-                   ✉️ Email Me
-                </a>
+                <div class="contact-item">
+                    <img src="assets/email.svg" alt="Email" class="icon-sm">
+                    <a href="mailto:alex.blizky@gmail.com?subject=WebPrompter%20Feedback" class="text-link">
+                        alex.blizky@gmail.com
+                    </a>
+                </div>
                 
-                <a href="https://www.reddit.com/message/compose/?to=inih" target="_blank" 
-                   class="btn" 
-                   style="font-size: 1.2rem; flex-grow: 1; background: #333; border: 1px solid white;">
-                   🤖 DM u/inih
-                </a>
+                <div class="contact-item">
+                    <img src="assets/reddit.svg" alt="Reddit" class="icon-sm">
+                    <a href="https://www.reddit.com/message/compose/?to=inih" target="_blank" class="text-link">
+                        u/inih
+                    </a>
+                </div>
 
             </div>
 
@@ -75,9 +77,13 @@
 
             <h1 style="color: var(--red);">⚠️ Danger Zone</h1>
             <p>If the app is stuck, settings are broken, or text size is glitching, use this to clear everything and start fresh.</p>
-            <button onclick="factoryReset()" class="btn-sub" style="border-color: var(--red); color: var(--red); width: 100%;">
-                🔄 Factory Reset App
+            
+            <button onclick="factoryReset()" class="btn-sub" style="border-color: var(--red); color: var(--red); width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <img src="assets/reset.svg" alt="Reset" class="icon-sm" style="filter: invert(32%) sepia(61%) saturate(2379%) hue-rotate(343deg) brightness(91%) contrast(92%);">
+                Factory Reset App
             </button>
+
+            
         </div>
 
         <a href="index.html" class="btn" style="margin-top: 20px; font-size: 1rem;">Back to App</a>
