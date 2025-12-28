@@ -352,48 +352,44 @@ footer a:hover {
 
 /* --- MOBILE WELCOME OVERLAY --- */
 #mobile-welcome {
-    display: none; /* Hidden by default on Desktops/Tablets */
+    /* Hidden by default. JavaScript will toggle this to 'flex' if it detects a phone. */
+    display: none; 
+    
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: var(--black);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
 
-/* Only show this on Phones (screens smaller than 768px) */
-@media (max-width: 768px) {
-    #mobile-welcome {
-        display: flex;
-        position: fixed;
-        inset: 0;
-        z-index: 2000; /* Sit on top of everything */
-        background: var(--black);
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
+/* Styles for the inner content remain the same */
+.mw-content {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 20px;
+    overflow: hidden;
+    max-width: 400px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+}
 
-    .mw-content {
-        background: #1a1a1a;
-        border: 1px solid #333;
-        border-radius: 20px;
-        overflow: hidden;
-        max-width: 400px;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        display: flex;
-        flex-direction: column;
-    }
+.mw-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-bottom: 1px solid #333;
+}
 
-    .mw-image {
-        width: 100%;
-        height: 250px;
-        object-fit: cover; /* Crops the image nicely without stretching */
-        border-bottom: 1px solid #333;
-    }
+.mw-text {
+    padding: 25px;
+    text-align: center;
+}
 
-    .mw-text {
-        padding: 25px;
-        text-align: center;
-    }
-
-    .mw-text h1 {
-        margin-top: 0;
-        color: var(--blue);
-        font-size: 1.5rem;
-    }
+.mw-text h1 {
+    margin-top: 0;
+    color: var(--blue);
+    font-size: 1.5rem;
 }
