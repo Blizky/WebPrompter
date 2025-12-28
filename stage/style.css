@@ -333,12 +333,19 @@ footer a:hover {
     text-decoration: underline;
 }
 
-
-/* Special Icon for the Yellow Header */
 .icon-header {
     width: 32px;
-    height: 32px;    
-    margin-right: 10px; /* Space between icon and text */
+    height: 32px;
+    margin-right: 15px; /* Added a bit more space */
+    
+    /* 1. Ensure the color is YELLOW, not Blue */
     background-color: var(--yellow); 
-    filter: invert(1); 
+    
+    /* 2. The Mask "Cuts out" the shape. 
+       NOTE: Ensure 'assets/radio.svg' is the correct path! */
+    -webkit-mask: url('assets/radio.svg') no-repeat center / contain;
+    mask: url('assets/radio.svg') no-repeat center / contain;
+    
+    /* Fallback: If mask fails, show nothing instead of a solid box */
+    display: inline-block;
 }
