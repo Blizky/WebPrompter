@@ -394,3 +394,20 @@ footer a:hover {
     color: var(--blue);
     font-size: 1.5rem;
 }
+
+/* Add this to the bottom of style.css */
+.icon-check {
+    width: 24px;
+    height: 24px;
+    
+    /* This forces the icon to be your brand Yellow */
+    background-color: var(--yellow); 
+    
+    /* This cuts the shape out of the yellow box */
+    -webkit-mask: url('assets/check.svg') no-repeat center / contain;
+    mask: url('assets/check.svg') no-repeat center / contain;
+    
+    margin-right: 10px;
+    flex-shrink: 0; /* Prevents icon from squishing on mobile */
+    display: inline-block;
+}
