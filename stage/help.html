@@ -4,19 +4,21 @@
     <title>Help & Tips | WebPrompter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-<link rel="manifest" href="assets/site.webmanifest">
-<link rel="shortcut icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="manifest" href="assets/site.webmanifest">
+    <link rel="shortcut icon" href="assets/favicon.ico">
 </head>
 <body>
     <div class="help-container">
+        
         <div class="header-container">
             <span class="app_icon">💬</span>
-          <span class="app_title">
-              <span style="color: var(--white);">Web</span>Prompter<span class="title-suffix">.app</span>
-          </span>
+            <span class="app_title">
+                <span style="color: var(--white);">Web</span>Prompter<span class="title-suffix">.app</span>
+            </span>
         </div>
 
         <div class="help-content">
@@ -47,6 +49,27 @@
                 <li><strong>Connection Failed?</strong> Ensure both devices are on the same Wi-Fi network (or have a working internet connection).</li>
                 <li><strong>Screen Sleeping?</strong> The app tries to keep your screen awake, but check your device settings if it dims.</li>
             </ul>
+
+            <hr>
+
+            <h1>🐛 Feedback & Support</h1>
+            <p>Found a bug? Have a feature request? Let me know!</p>
+            
+            <a href="mailto:alex@example.com?subject=WebPrompter%20Feedback" class="btn-sub" style="display:inline-block; text-align:center; text-decoration:none; margin-right: 10px;">
+                ✉️ Email Support
+            </a>
+            
+            <a href="https://x.com/blizky" target="_blank" class="btn-sub" style="display:inline-block; text-align:center; text-decoration:none;">
+                🐦 DM on X
+            </a>
+
+            <hr>
+
+            <h1 style="color: var(--red);">⚠️ Danger Zone</h1>
+            <p>If the app is stuck, settings are broken, or text size is glitching, use this to clear everything and start fresh.</p>
+            <button onclick="factoryReset()" class="btn-sub" style="border-color: var(--red); color: var(--red); width: 100%;">
+                🔄 Factory Reset App
+            </button>
         </div>
 
         <a href="index.html" class="btn" style="margin-top: 20px; font-size: 1rem;">Back to App</a>
@@ -55,5 +78,15 @@
             Made by Alex Blizky with <span class="heart">❤️</span>
         </footer>
     </div>
+
+    <script>
+        function factoryReset() {
+            if(confirm('Are you sure? This will delete your saved script and reset all settings to default.')) {
+                localStorage.removeItem('wpSettings');
+                alert('App reset successfully.');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
 </body>
 </html>
